@@ -1,4 +1,5 @@
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Integration Services | AppZoro Technologies</title>
 <style>
   @font-face {
@@ -866,6 +867,38 @@
     font-size: var(--fs-xs); color: var(--dim); font-weight: 500;
   }
 
+  /* ── HAMBURGER / MOBILE NAV ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; width: 40px; height: 40px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: #ccc; border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-mobile-menu {
+    display: none;
+    position: fixed; top: 58px; left: 0; right: 0;
+    background: rgba(10,10,10,0.98);
+    padding: 1.25rem 5vw 1.5rem;
+    border-bottom: 1px solid #1A1A1A;
+    z-index: 99;
+  }
+  .nav-mobile-menu.open { display: flex; flex-direction: column; gap: 0.75rem; }
+  .nav-mobile-cta {
+    display: block; background: var(--red); color: #fff;
+    text-align: center; padding: 0.8rem 1.5rem;
+    border-radius: 7px; text-decoration: none;
+    font-weight: 700; font-size: 1rem;
+  }
+
   /* ── RESPONSIVE ── */
 
   /* Tablet: 768–1024px */
@@ -876,96 +909,100 @@
     .hero-right { justify-content: center; }
     .hero-photo { max-width: 100%; height: 280px; }
     .hero-stat-card { top: -14px; right: -10px; }
-
     .services { padding: 60px 4vw; }
-    .services-grid { grid-template-columns: repeat(2,1fr); }
-
+    .svc-items { grid-template-columns: 1fr 1fr; }
     .team { padding: 60px 4vw; }
     .team .two-col { grid-template-columns: 1fr; }
     .team-photo { margin-top: 1.5rem; }
     .team-real-photo { height: 280px; }
-
     .transform { padding: 60px 4vw; }
     .transform-real-photo { height: 320px; }
-
     .insights { padding: 60px 4vw; }
     .insights-grid { grid-template-columns: repeat(2,1fr); }
-
     .work-cta { padding: 40px 4vw; }
-    .work-cta-card { padding: 40px 40px; gap: 1.5rem; }
-
+    .work-cta-card { padding: 40px; gap: 1.5rem; }
     .footer-main { padding: 2rem 1.5rem 1.5rem; }
-
-    .pf-inner { grid-template-columns: 1fr; }
-    .pf-visual { display: none; }
+    .services-intro { grid-template-columns: 1fr; }
+    .svc-visual-wrap { display: none; }
   }
 
   /* Mobile: ≤767px */
   @media(max-width:767px) {
+    /* Nav */
     nav { height: 58px; padding: 0 5vw; }
     .logo img { height: 28px; }
-    .nav-btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+    .nav-btn-desktop { display: none; }
+    .nav-hamburger { display: flex; }
 
-    .hero { padding: 64px 5vw 48px; min-height: auto; }
-    .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .hero h1 { font-size: clamp(2rem,8vw,3rem); }
-    .hero-sub { font-size: 1.1rem; }
-    .hero-desc { font-size: 0.92rem; }
-    .hero-cta-box { padding: 1rem 1.2rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    /* Typography scale-down */
+    h2, h3 { font-size: 22px !important; }
+    p, li  { font-size: 16px !important; line-height: 1.65 !important; }
+    .insight-body h3 { font-size: 15px !important; }
+
+    /* Hero */
+    .hero { padding: 60px 5vw 44px; min-height: auto; }
+    .hero-inner { grid-template-columns: 1fr; gap: 1.75rem; }
+    .hero h1 { font-size: clamp(1.8rem,7vw,2.6rem) !important; }
+    .hero-sub { font-size: 1rem; }
+    .hero-desc { font-size: 0.9rem; }
+    .hero-cta-box { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1rem 1.2rem; }
     .hero-right { justify-content: center; }
-    .hero-photo-wrap::before, .hero-photo-wrap::after { width: 44px; height: 44px; }
-    .hero-photo { height: 220px; }
+    .hero-photo-wrap::before, .hero-photo-wrap::after { width: 36px; height: 36px; }
+    .hero-photo { height: 200px; }
     .hero-stat-card { display: none; }
-    .hero-photo-badge { font-size: 0.68rem; padding: 6px 10px; }
+    .hero-photo-badge { font-size: 0.65rem; padding: 5px 9px; }
 
+    /* Services */
+    .services { padding: 44px 5vw; }
+    .services-intro { display: none; }
+    .svc-items { grid-template-columns: 1fr !important; }
+    .svc-item { padding: 1.25rem 0 !important; border-left: none !important; }
+    .svc-item:nth-child(even) { padding-left: 0 !important; border-left: none !important; }
 
-    .services { padding: 48px 5vw; }
-    .services-header { margin-bottom: 2rem; }
-    .services-grid { grid-template-columns: 1fr; gap: 1rem; }
-    .svc-strip { gap: 1rem; flex-wrap: wrap; justify-content: center; }
-
-    .team { padding: 48px 5vw; }
-    .team .two-col { grid-template-columns: 1fr; }
+    /* Team */
+    .team { padding: 44px 5vw; }
+    .team .two-col { grid-template-columns: 1fr !important; }
     .team-text { order: 2; }
     .team-photo { order: 1; }
-    .team-real-photo { height: 240px; }
+    .team-real-photo { height: 220px; }
 
-    .transform { padding: 48px 5vw; }
-    .transform-visual-wrap { margin-bottom: 1.5rem; order: -1; }
-    .transform-real-photo { height: 220px; }
-    .transform-stat-pill { font-size: 0.75rem; padding: 8px 14px; }
+    /* Transform */
+    .transform { padding: 44px 5vw; }
+    .transform-grid { grid-template-columns: 1fr !important; }
+    .transform-visual-wrap { order: -1; margin-bottom: 1.25rem; }
+    .transform-real-photo { height: 200px; }
+    .transform-stat-pill { font-size: 0.72rem; padding: 7px 12px; }
 
-    .insights { padding: 48px 5vw; }
-    .insights-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .insights-grid { grid-template-columns: 1fr; }
+    /* Insights */
+    .insights { padding: 44px 5vw; }
+    .insights-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .insights-grid { grid-template-columns: 1fr !important; }
     .insight-body { padding: 1rem; }
 
-    .work-cta { padding: 32px 5vw; }
-    .work-cta-card { padding: 32px 24px; flex-direction: column; text-align: center; }
+    /* CTA */
+    .work-cta { padding: 28px 5vw; }
+    .work-cta-card { padding: 28px 20px; flex-direction: column; text-align: center; gap: 1.25rem; }
     .work-cta-text { text-align: center; }
     .work-cta-text p { max-width: 100%; }
-    .cta-starburst { width: 180px; height: 180px; top: -40px; right: -40px; }
+    .cta-starburst { width: 160px; height: 160px; top: -40px; right: -30px; }
 
-    .footer-main { padding: 1.5rem 1rem; }
-    .footer-bottom { padding: 0.75rem 1rem; }
-
-    .pf-inner { grid-template-columns: 1fr; }
-    .pf-visual { display: none; }
-
-    .two-col { grid-template-columns: 1fr !important; }
-    .team-text h2 {  }
-    .transform-text h2 {  }
-    .insights-head h2 {  }
-    .insight-body h3 {  }
-    .work-cta-text h2 {  }
+    /* Footer */
+    .footer-main { padding: 1.5rem 1.25rem 1.25rem; }
+    .footer-desc { font-size: 14px !important; }
+    .footer-bottom { padding: 0.7rem 1rem; }
+    .footer-contact-row { gap: 0.5rem; }
+    .footer-contact-row a { font-size: 14px !important; }
   }
 
   /* Small mobile: ≤400px */
   @media(max-width:400px) {
-    .hero h1 { font-size: 1.9rem; }
-    .hero-cta-box { max-width: 100%; }
+    h2, h3 { font-size: 20px !important; }
+    .hero h1 { font-size: 1.75rem !important; }
     .btn-lime { width: 100%; text-align: center; }
-    .work-cta-card { padding: 32px 18px 40px; }
+    .work-cta-card { padding: 24px 16px; }
+    .hero-cta-box { max-width: 100%; }
+    .footer-contact-row { flex-direction: column; gap: 0.4rem; }
+    .footer-dot { display: none; }
   }
 </style>
 
@@ -1100,8 +1137,14 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="logo"><img src="data:image/avif;base64,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" alt="AppZoro" /></a>
-  <a href="mailto:info@appzoro.com" class="nav-btn">Book a Call</a>
+  <a href="mailto:info@appzoro.com" class="nav-btn nav-btn-desktop">Book a Call</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="mailto:info@appzoro.com" class="nav-mobile-cta">Book a Call</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1434,3 +1477,22 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function(){
+  var btn = document.getElementById('navHamburger');
+  var menu = document.getElementById('navMobileMenu');
+  if(!btn || !menu) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  // Close on outside click
+  document.addEventListener('click', function(e){
+    if(!btn.contains(e.target) && !menu.contains(e.target)){
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    }
+  });
+})();
+</script>
