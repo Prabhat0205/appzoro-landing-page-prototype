@@ -124,6 +124,21 @@
     display: flex; flex-direction: column; justify-content: center;
   }
 
+  /* full-width image below hero columns */
+  .hero-bottom-img {
+    width: 100%;
+    max-width: var(--max);
+    margin: 2.5rem auto 0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+  }
+  .hero-bottom-img img {
+    width: 100%;
+    display: block;
+    border-radius: 16px;
+  }
+
   /* red glow blob bottom-left */
   .hero::after {
     content: '';
@@ -1181,6 +1196,11 @@
 
       </div>
     </div>
+  </div>
+
+  <!-- full-width image below hero columns -->
+  <div class="hero-bottom-img">
+    <img src="images/hero-bottom.jpg" alt="AI workflow transformation" />
   </div>
 
 </section>
