@@ -715,7 +715,6 @@
   .transform-text strong { color:var(--off-white); }
 
   /* ── FOOTER ── */
-  /* ── PRE-FOOTER CTA ── */
   /* ── WORK WITH US CTA ── */
   .work-cta {
     background: var(--surface);
@@ -729,51 +728,96 @@
   }
   .work-cta-card {
     background: #FFFFFF;
-    border: 1.5px solid #E2E0DC;
-    border-radius: 14px;
-    padding: 44px 56px;
+    border: 1.5px solid #E8E6E2;
+    border-radius: 18px;
+    padding: 52px 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2.5rem;
-    max-width: 900px;
-    margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+  }
+  /* circuit/network decorative background */
+  .cta-bg-svg {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 1;
   }
   .work-cta-text {
     flex: 1;
     text-align: left;
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+  }
+  .work-cta-eyebrow {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.85rem;
   }
   .work-cta-text h2 {
-    
-     letter-spacing: -0.03em;
-    line-height: 1.1; 
-    text-wrap: balance; margin-bottom: 0.75rem;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    color: #0A0A0A;
+    margin-bottom: 0.85rem;
   }
+  .work-cta-text h2 span { color: var(--red); }
   .work-cta-text p {
     font-size: var(--fs-base); color: #5A5A58;
-    line-height: 1.65; margin-bottom: 0;
-    max-width: 420px;
+    line-height: 1.65; margin-bottom: 1.25rem;
   }
-  .work-cta-action { flex-shrink: 0; }
+  .work-cta-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+  }
+  .cta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #F5F4F1;
+    border: 1.5px solid #E2E0DC;
+    border-radius: 50px;
+    padding: 0.42rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1A1A18;
+    white-space: nowrap;
+  }
+  .cta-pill svg { color: var(--red); flex-shrink: 0; }
+  .work-cta-action {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
   .btn-work-cta {
-    display: inline-block; background: var(--red); color: #fff;
-    border: none; border-radius: 7px;
-    padding: 1rem 2rem; font-size: var(--fs-base); font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--red); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 1.1rem 2.2rem;
+    font-size: 1rem; font-weight: 700;
     cursor: pointer; text-decoration: none; letter-spacing: 0.01em;
     white-space: nowrap;
-    transition: background 0.18s, transform 0.15s;
+    transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+    box-shadow: 0 4px 20px rgba(212,43,43,0.3);
   }
-  .btn-work-cta:hover { background: var(--red-h); transform: translateY(-2px); }
-
-  .cta-starburst {
-    position: absolute;
-    top: -80px; right: -80px;
-    width: 320px; height: 320px;
-    opacity: 0.12;
-    pointer-events: none;
-  }
-  .work-cta-card { position: relative; overflow: hidden; }
+  .btn-work-cta svg { transition: transform 0.18s; }
+  .btn-work-cta:hover { background: var(--red-h); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,43,43,0.38); }
+  .btn-work-cta:hover svg { transform: translateX(4px); }
 
 
   /* ── FOOTER ── */
@@ -974,7 +1018,9 @@
     .insights { padding: 60px 4vw; }
     .insights-grid { grid-template-columns: repeat(2,1fr); }
     .work-cta { padding: 40px 4vw; }
-    .work-cta-card { padding: 40px; gap: 1.5rem; }
+    .work-cta-card { padding: 44px 40px; gap: 2rem; }
+    .work-cta-text h2 { font-size: 2rem; }
+    .cta-bg-svg { width: 50%; }
     .footer-main { padding: 2rem 1.5rem 1.5rem; }
     .services-intro { grid-template-columns: 1fr; gap: 2rem; }
   }
@@ -999,7 +1045,9 @@
     .hero h1 { font-size: clamp(1.8rem,7vw,2.6rem) !important; }
     .hero-sub { font-size: 1rem; }
     .hero-desc { font-size: 0.9rem; }
-    .hero-cta-box { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1rem 1.2rem; }
+    .hero-cta-box { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 1rem 1.2rem; width: 100%; box-sizing: border-box; }
+    .hero-cta-label { white-space: normal; font-size: 14px; }
+    .btn-lime { width: 100%; text-align: center; display: block; padding: 0.7rem 1rem; font-size: 15px; }
     .hero-right { justify-content: center; }
     .hero-photo-wrap::before, .hero-photo-wrap::after { width: 36px; height: 36px; }
     .hero-photo { height: 200px; }
@@ -1035,10 +1083,12 @@
 
     /* CTA */
     .work-cta { padding: 28px 5vw; }
-    .work-cta-card { padding: 28px 20px; flex-direction: column; text-align: center; gap: 1.25rem; }
-    .work-cta-text { text-align: center; }
-    .work-cta-text p { max-width: 100%; }
-    .cta-starburst { width: 160px; height: 160px; top: -40px; right: -30px; }
+    .work-cta-card { padding: 28px 20px; flex-direction: column; text-align: center; gap: 1.5rem; }
+    .work-cta-text { text-align: center; max-width: 100%; }
+    .work-cta-text h2 { font-size: 1.75rem !important; }
+    .work-cta-pills { justify-content: center; }
+    .cta-bg-svg { width: 100%; height: 50%; top: auto; bottom: 0; opacity: 0.35; }
+    .btn-work-cta { width: 100%; justify-content: center; }
 
     /* Footer */
     .footer-main { padding: 1.5rem 1.25rem 1.25rem; }
@@ -1052,9 +1102,7 @@
   @media(max-width:400px) {
     h2, h3 { font-size: 20px !important; }
     .hero h1 { font-size: 1.75rem !important; }
-    .btn-lime { width: 100%; text-align: center; }
     .work-cta-card { padding: 24px 16px; }
-    .hero-cta-box { max-width: 100%; }
     .footer-contact-row { flex-direction: column; gap: 0.4rem; }
     .footer-dot { display: none; }
   }
@@ -1412,46 +1460,66 @@
 <section class="work-cta">
   <div class="work-cta-inner">
     <div class="work-cta-card">
-      <!-- decorative starburst top-right -->
-      <div class="cta-starburst" aria-hidden="true">
-        <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="240" cy="240" r="36" fill="#D42B2B"/>
-          <g stroke="#D42B2B" stroke-linecap="round">
-            <line x1="240" y1="240" x2="240" y2="10"  stroke-width="5"/>
-            <line x1="240" y1="240" x2="240" y2="470" stroke-width="5"/>
-            <line x1="240" y1="240" x2="10"  y2="240" stroke-width="5"/>
-            <line x1="240" y1="240" x2="470" y2="240" stroke-width="5"/>
-            <line x1="240" y1="240" x2="403" y2="77"  stroke-width="4.5"/>
-            <line x1="240" y1="240" x2="77"  y2="403" stroke-width="4.5"/>
-            <line x1="240" y1="240" x2="77"  y2="77"  stroke-width="4.5"/>
-            <line x1="240" y1="240" x2="403" y2="403" stroke-width="4.5"/>
-            <line x1="240" y1="240" x2="316" y2="24"  stroke-width="3.5"/>
-            <line x1="240" y1="240" x2="164" y2="24"  stroke-width="3.5"/>
-            <line x1="240" y1="240" x2="456" y2="316" stroke-width="3.5"/>
-            <line x1="240" y1="240" x2="456" y2="164" stroke-width="3.5"/>
-            <line x1="240" y1="240" x2="164" y2="456" stroke-width="3.5"/>
-            <line x1="240" y1="240" x2="316" y2="456" stroke-width="3.5"/>
-            <line x1="240" y1="240" x2="24"  y2="164" stroke-width="3.5"/>
-            <line x1="240" y1="240" x2="24"  y2="316" stroke-width="3.5"/>
-            <line x1="240" y1="240" x2="355" y2="42"  stroke-width="2.5" opacity="0.6"/>
-            <line x1="240" y1="240" x2="125" y2="42"  stroke-width="2.5" opacity="0.6"/>
-            <line x1="240" y1="240" x2="438" y2="355" stroke-width="2.5" opacity="0.6"/>
-            <line x1="240" y1="240" x2="438" y2="125" stroke-width="2.5" opacity="0.6"/>
-            <line x1="240" y1="240" x2="125" y2="438" stroke-width="2.5" opacity="0.6"/>
-            <line x1="240" y1="240" x2="355" y2="438" stroke-width="2.5" opacity="0.6"/>
-            <line x1="240" y1="240" x2="42"  y2="125" stroke-width="2.5" opacity="0.6"/>
-            <line x1="240" y1="240" x2="42"  y2="355" stroke-width="2.5" opacity="0.6"/>
-          </g>
-        </svg>
-      </div>
-      <!-- text -->
+
+      <!-- decorative circuit/network background -->
+      <svg class="cta-bg-svg" viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">
+        <defs>
+          <radialGradient id="ctaFade" cx="80%" cy="50%" r="65%">
+            <stop offset="0%" stop-color="#D42B2B" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#D42B2B" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="700" height="280" fill="url(#ctaFade)"/>
+        <!-- flowing curve lines -->
+        <path d="M700,40 Q580,90 460,70 Q340,50 260,110 Q180,170 80,150" fill="none" stroke="#D42B2B" stroke-width="1.5" opacity="0.25"/>
+        <path d="M700,90 Q600,130 500,115 Q390,100 300,155 Q210,210 100,195" fill="none" stroke="#D42B2B" stroke-width="1.2" opacity="0.2"/>
+        <path d="M700,145 Q610,175 510,165 Q400,155 320,200 Q240,245 130,235" fill="none" stroke="#D42B2B" stroke-width="1" opacity="0.18"/>
+        <path d="M700,200 Q620,220 530,215 Q430,210 360,245 Q290,275 180,270" fill="none" stroke="#D42B2B" stroke-width="0.9" opacity="0.14"/>
+        <!-- dots at intersections -->
+        <circle cx="460" cy="70"  r="3.5" fill="#D42B2B" opacity="0.3"/>
+        <circle cx="500" cy="115" r="3"   fill="#D42B2B" opacity="0.28"/>
+        <circle cx="510" cy="165" r="3"   fill="#D42B2B" opacity="0.25"/>
+        <circle cx="300" cy="155" r="3"   fill="#D42B2B" opacity="0.22"/>
+        <circle cx="530" cy="215" r="2.5" fill="#D42B2B" opacity="0.2"/>
+        <circle cx="360" cy="245" r="2.5" fill="#D42B2B" opacity="0.18"/>
+        <circle cx="620" cy="60"  r="2"   fill="#D42B2B" opacity="0.2"/>
+        <circle cx="640" cy="170" r="2"   fill="#D42B2B" opacity="0.16"/>
+        <!-- vertical connector lines -->
+        <line x1="460" y1="70"  x2="500" y2="115" stroke="#D42B2B" stroke-width="1" opacity="0.18"/>
+        <line x1="500" y1="115" x2="510" y2="165" stroke="#D42B2B" stroke-width="1" opacity="0.16"/>
+        <line x1="510" y1="165" x2="530" y2="215" stroke="#D42B2B" stroke-width="1" opacity="0.14"/>
+        <line x1="300" y1="155" x2="320" y2="200" stroke="#D42B2B" stroke-width="1" opacity="0.14"/>
+      </svg>
+
+      <!-- left: text + pills -->
       <div class="work-cta-text">
-        <h2>Work With Us Today</h2>
-        <p>Embrace innovation to drive new value for your organization. Let&rsquo;s build something great with AI — together.</p>
+        <span class="work-cta-eyebrow">Let&rsquo;s Build the Future</span>
+        <h2>Work With Us <span>Today</span></h2>
+        <p>Embrace innovation to drive new value for your organization. Let&rsquo;s build something great with AI &mdash; together.</p>
+        <div class="work-cta-pills">
+          <span class="cta-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            AI Strategy
+          </span>
+          <span class="cta-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.42 0l6.58-6.58a1 1 0 000-1.42L12 2z"/><path d="M7 7h.01"/></svg>
+            Automation
+          </span>
+          <span class="cta-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="7" height="7"/><rect x="15" y="3" width="7" height="7"/><rect x="2" y="14" width="7" height="7"/><rect x="15" y="14" width="7" height="7"/></svg>
+            System Integration
+          </span>
+        </div>
       </div>
+
+      <!-- right: CTA button -->
       <div class="work-cta-action">
-        <a href="https://appzoro.com/contact-us" class="btn-work-cta">Schedule a Consultation</a>
+        <a href="https://appzoro.com/contact-us" class="btn-work-cta">
+          Schedule a Consultation
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
+
     </div>
   </div>
 </section>
