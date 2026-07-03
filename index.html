@@ -1106,6 +1106,185 @@
     .footer-contact-row { flex-direction: column; gap: 0.4rem; }
     .footer-dot { display: none; }
   }
+
+  /* ── CONTACT MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10,10,10,0.55);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px 40px 36px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    animation: modalIn 0.22s cubic-bezier(.22,.68,0,1.2) both;
+    margin: auto;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.93) translateY(12px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 18px;
+    background: none; border: none;
+    font-size: 1.6rem; line-height: 1;
+    color: #888; cursor: pointer;
+    padding: 4px 8px; border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .modal-close:hover { color: var(--red); background: #fdf0f0; }
+
+  .modal-card h2 {
+    font-size: clamp(1.5rem, 5vw, 1.9rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #0A0A0A;
+    margin-bottom: 1.4rem;
+  }
+  .modal-card h2 span { color: var(--red); display: block; }
+
+  .modal-form { display: flex; flex-direction: column; gap: 0.85rem; }
+
+  .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+  .modal-field {
+    position: relative;
+  }
+  .modal-field input,
+  .modal-field textarea {
+    width: 100%; box-sizing: border-box;
+    border: 1.5px solid #E2E0DC;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: #1C1C1C;
+    background: #FAFAF9;
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
+  .modal-field input::placeholder,
+  .modal-field textarea::placeholder { color: #C07A30; font-size: 0.88rem; }
+  .modal-field input:focus,
+  .modal-field textarea:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(212,43,43,0.1);
+    background: #fff;
+  }
+  .modal-field textarea { resize: vertical; min-height: 90px; }
+
+  .modal-services-label {
+    font-size: 0.88rem; font-weight: 600;
+    color: #1C1C1C; margin-bottom: 0.5rem;
+  }
+  .modal-services-label span { color: var(--red); }
+
+  .modal-services-pills {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .modal-services-pills label {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    cursor: pointer;
+  }
+  .modal-services-pills input[type="checkbox"] { display: none; }
+  .pill-tag {
+    display: inline-block;
+    padding: 0.38rem 0.85rem;
+    border: 1.5px solid #D0CEC9;
+    border-radius: 50px;
+    font-size: 0.8rem; font-weight: 500;
+    color: #3A3A38;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    user-select: none;
+  }
+  .modal-services-pills input[type="checkbox"]:checked + .pill-tag {
+    border-color: var(--red);
+    background: #fdf0f0;
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .modal-captcha {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .modal-captcha-label {
+    font-size: 0.9rem; font-weight: 600;
+    color: #1C1C1C; white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .modal-captcha input {
+    flex: 1; max-width: 140px;
+    border: 1.5px solid #E2E0DC;
+    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem; font-family: inherit;
+    color: #1C1C1C; background: #FAFAF9;
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+    box-sizing: border-box;
+  }
+  .modal-captcha input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(212,43,43,0.1);
+    background: #fff;
+  }
+
+  .modal-error {
+    font-size: 0.8rem; color: var(--red);
+    display: none; margin-top: -0.4rem;
+  }
+  .modal-error.show { display: block; }
+
+  .modal-submit {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--red); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 0.85rem 2rem;
+    font-size: 0.95rem; font-weight: 700; font-family: inherit;
+    cursor: pointer; letter-spacing: 0.04em; text-transform: uppercase;
+    transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+    box-shadow: 0 4px 18px rgba(212,43,43,0.28);
+    align-self: flex-start;
+    margin-top: 0.25rem;
+  }
+  .modal-submit:hover { background: var(--red-h); transform: translateY(-1px); }
+  .modal-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+  .modal-success {
+    display: none; text-align: center; padding: 1.5rem 0 0.5rem;
+  }
+  .modal-success.show { display: block; }
+  .modal-success-icon {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #f0fdf4; border: 2px solid #22c55e;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+  }
+  .modal-success h3 { font-size: 1.2rem; font-weight: 700; color: #0A0A0A; margin-bottom: 0.5rem; }
+  .modal-success p  { font-size: 0.9rem; color: #5A5A58; }
+
+  @media(max-width:520px) {
+    .modal-card { padding: 28px 20px 24px; }
+    .modal-row  { grid-template-columns: 1fr; }
+    .modal-submit { width: 100%; justify-content: center; }
+  }
 </style>
 
 <script>
@@ -1239,31 +1418,17 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="logo"><img src="data:image/avif;base64,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" alt="AppZoro" /></a>
-  <ul class="nav-links nav-links-desktop">
-    <li><a href="#">Services <span class="arrow">▼</span></a></li>
-    <li><a href="#">Products <span class="arrow">▼</span></a></li>
-    <li><a href="#">Industries <span class="arrow">▼</span></a></li>
-    <li><a href="#">Portfolio</a></li>
-    <li><a href="#">Company <span class="arrow">▼</span></a></li>
-    <li><a href="#">Blogs</a></li>
-  </ul>
   <div class="nav-right nav-btn-desktop">
     <a href="tel:6784624034" class="nav-phone">&#9990; 678-462-4034</a>
-    <a href="https://appzoro.com/contact-us" class="nav-btn">LET'S TALK</a>
+    <a href="#contact" class="nav-btn">LET'S TALK</a>
   </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="nav-mobile-menu" id="navMobileMenu">
-  <a href="#">Services</a>
-  <a href="#">Products</a>
-  <a href="#">Industries</a>
-  <a href="#">Portfolio</a>
-  <a href="#">Company</a>
-  <a href="#">Blogs</a>
   <a href="tel:6784624034">&#9990; 678-462-4034</a>
-  <a href="https://appzoro.com/contact-us" class="nav-mobile-cta">LET'S TALK</a>
+  <a href="#contact" class="nav-mobile-cta">LET'S TALK</a>
 </div>
 
 <!-- HERO -->
@@ -1276,7 +1441,7 @@
       <p class="hero-desc">Integrating Artificial Intelligence into your existing systems is essential for unlocking your organization's full potential. Our <strong>AI Integration Services</strong> bridge the gap between AI technology and your business processes, enabling smooth collaboration between humans and AI.</p>
       <div class="hero-cta-box">
         <span class="hero-cta-label">Let's talk AI Integration.</span>
-        <a href="https://appzoro.com/contact-us" class="btn-lime">Get in Touch</a>
+        <a href="#contact" class="btn-lime">Get in Touch</a>
       </div>
     </div>
 
@@ -1514,7 +1679,7 @@
 
       <!-- right: CTA button -->
       <div class="work-cta-action">
-        <a href="https://appzoro.com/contact-us" class="btn-work-cta">
+        <a href="#contact" class="btn-work-cta">
           Schedule a Consultation
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
@@ -1578,6 +1743,204 @@
     if(!btn.contains(e.target) && !menu.contains(e.target)){
       btn.classList.remove('open');
       menu.classList.remove('open');
+    }
+  });
+})();
+</script>
+
+<!-- CONTACT MODAL -->
+<div id="contactModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <h2 id="modalTitle">Book a Free <span>Consultation</span></h2>
+
+    <div id="modalSuccess" class="modal-success">
+      <div class="modal-success-icon">&#10003;</div>
+      <h3>Message Sent!</h3>
+      <p>Thank you! We'll be in touch with you shortly.</p>
+    </div>
+
+    <form id="contactForm" class="modal-form" novalidate>
+      <div class="modal-row">
+        <div class="modal-field">
+          <input type="text" name="firstName" placeholder="First name" required autocomplete="given-name"/>
+        </div>
+        <div class="modal-field">
+          <input type="text" name="lastName" placeholder="Last name" required autocomplete="family-name"/>
+        </div>
+      </div>
+      <div class="modal-field">
+        <input type="email" name="email" placeholder="Email address" required autocomplete="email"/>
+      </div>
+      <div class="modal-field">
+        <input type="tel" name="phone" placeholder="Phone number" autocomplete="tel"/>
+      </div>
+      <div class="modal-field">
+        <input type="text" name="company" placeholder="Company name" autocomplete="organization"/>
+      </div>
+
+      <div>
+        <p class="modal-services-label">Services <span>*</span></p>
+        <div class="modal-services-pills">
+          <label><input type="checkbox" name="services" value="Web Development"/><span class="pill-tag">Web Development</span></label>
+          <label><input type="checkbox" name="services" value="Mobile App Development"/><span class="pill-tag">Mobile App Development</span></label>
+          <label><input type="checkbox" name="services" value="UI/UX Design"/><span class="pill-tag">UI/UX Design</span></label>
+          <label><input type="checkbox" name="services" value="Maintenance & Support"/><span class="pill-tag">Maintenance &amp; Support</span></label>
+          <label><input type="checkbox" name="services" value="Custom Software Development"/><span class="pill-tag">Custom Software Development</span></label>
+          <label><input type="checkbox" name="services" value="QA Services"/><span class="pill-tag">QA Services</span></label>
+          <label><input type="checkbox" name="services" value="eCommerce Development"/><span class="pill-tag">eCommerce Development</span></label>
+          <label><input type="checkbox" name="services" value="AI/ML Services"/><span class="pill-tag">AI/ML Services</span></label>
+          <label><input type="checkbox" name="services" value="Other Services"/><span class="pill-tag">Other Services</span></label>
+        </div>
+        <span id="servicesError" class="modal-error">Please select at least one service.</span>
+      </div>
+
+      <div class="modal-field">
+        <textarea name="projectDetails" placeholder="Project requirement details"></textarea>
+      </div>
+
+      <div class="modal-captcha">
+        <span class="modal-captcha-label" id="captchaQuestion">5 + 2 =</span>
+        <input type="number" id="captchaAnswer" placeholder="Your answer" min="0" max="99"/>
+      </div>
+      <span id="captchaError" class="modal-error">Incorrect answer. Please try again.</span>
+
+      <button type="submit" class="modal-submit" id="modalSubmitBtn">
+        Submit
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  // --- Captcha setup ---
+  var captchaPairs = [[3,4],[5,2],[6,1],[2,7],[4,5],[8,1],[3,6],[7,2],[9,0],[4,3]];
+  var pair = captchaPairs[Math.floor(captchaPairs.length * 0.5)]; // stable: 5+2=7
+  var captchaAnswer = pair[0] + pair[1];
+  document.getElementById('captchaQuestion').textContent = pair[0] + ' + ' + pair[1] + ' =';
+
+  // --- Modal open/close ---
+  var overlay = document.getElementById('contactModal');
+  var closeBtn = document.getElementById('modalClose');
+
+  function openModal(){
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    overlay.querySelector('input, textarea') && overlay.querySelector('input, textarea').focus();
+  }
+  function closeModal(){
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Intercept all CTA links
+  document.querySelectorAll('.nav-btn, .nav-mobile-cta, .btn-lime, .btn-work-cta').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeModal();
+  });
+
+  // --- Form submission ---
+  var form = document.getElementById('contactForm');
+  var submitBtn = document.getElementById('modalSubmitBtn');
+  var successEl = document.getElementById('modalSuccess');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var valid = true;
+
+    // Validate required text fields
+    ['firstName','lastName','email'].forEach(function(name){
+      var el = form.querySelector('[name="'+name+'"]');
+      if(!el.value.trim()){ el.style.borderColor='#D42B2B'; valid=false; }
+      else { el.style.borderColor=''; }
+    });
+
+    // Validate email format
+    var emailEl = form.querySelector('[name="email"]');
+    if(emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)){
+      emailEl.style.borderColor='#D42B2B'; valid=false;
+    }
+
+    // Validate services
+    var checked = form.querySelectorAll('[name="services"]:checked');
+    var servErr = document.getElementById('servicesError');
+    if(checked.length === 0){ servErr.classList.add('show'); valid=false; }
+    else { servErr.classList.remove('show'); }
+
+    // Validate captcha
+    var capErr = document.getElementById('captchaError');
+    var capInput = document.getElementById('captchaAnswer');
+    if(parseInt(capInput.value, 10) !== captchaAnswer){ capErr.classList.add('show'); capInput.style.borderColor='#D42B2B'; valid=false; }
+    else { capErr.classList.remove('show'); capInput.style.borderColor=''; }
+
+    if(!valid) return;
+
+    // Collect data
+    var services = Array.from(checked).map(function(c){ return c.value; }).join(', ');
+    var body = {
+      firstName:      form.querySelector('[name="firstName"]').value.trim(),
+      lastName:       form.querySelector('[name="lastName"]').value.trim(),
+      email:          form.querySelector('[name="email"]').value.trim(),
+      phone:          form.querySelector('[name="phone"]').value.trim(),
+      company:        form.querySelector('[name="company"]').value.trim(),
+      services:       services,
+      projectDetails: form.querySelector('[name="projectDetails"]').value.trim(),
+      _replyto:       form.querySelector('[name="email"]').value.trim(),
+      _subject:       'New Consultation Request from ' + form.querySelector('[name="firstName"]').value.trim() + ' ' + form.querySelector('[name="lastName"]').value.trim(),
+      _cc:            'info@appzoro.com'
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    // Send via Formspree — replace FORMSPREE_ID with your form ID from formspree.io
+    fetch('https://formspree.io/f/FORMSPREE_ID', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(body)
+    })
+    .then(function(res){ return res.json().then(function(d){ return {ok: res.ok, data: d}; }); })
+    .then(function(r){
+      if(r.ok){
+        form.style.display = 'none';
+        successEl.classList.add('show');
+        setTimeout(closeModal, 3000);
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+        alert('Something went wrong. Please try again.');
+      }
+    })
+    .catch(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit';
+      alert('Network error. Please check your connection and try again.');
+    });
+  });
+
+  // Reset form when modal closes
+  overlay.addEventListener('transitionend', function(){
+    if(!overlay.classList.contains('active')){
+      form.reset();
+      form.style.display = '';
+      successEl.classList.remove('show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit';
+      form.querySelectorAll('input, textarea').forEach(function(el){ el.style.borderColor=''; });
+      document.getElementById('servicesError').classList.remove('show');
+      document.getElementById('captchaError').classList.remove('show');
     }
   });
 })();
