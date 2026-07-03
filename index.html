@@ -79,25 +79,49 @@
     backdrop-filter: blur(16px);
     border-bottom: 1px solid #1A1A1A;
     padding: 0 5vw;
-    height: 68px;
+    height: 60px;
     display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
   }
 
   .logo {
     text-decoration: none;
-    position: relative; z-index: 1;
+    flex-shrink: 0;
     display: flex; align-items: center;
   }
-  .logo img { height: 36px; width: auto; display: block; }
+  .logo img { height: 32px; width: auto; display: block; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 0.15rem;
+    list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center;
+  }
+  .nav-links a {
+    color: #ccc; text-decoration: none; font-size: 14px; font-weight: 500;
+    padding: 0.4rem 0.7rem; border-radius: 5px;
+    display: flex; align-items: center; gap: 4px;
+    transition: color 0.15s, background 0.15s; white-space: nowrap;
+  }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+  .nav-links .arrow { font-size: 10px; opacity: 0.6; }
+
+  .nav-right {
+    display: flex; align-items: center; gap: 0.9rem; flex-shrink: 0;
+  }
+  .nav-phone {
+    color: #ccc; font-size: 13px; font-weight: 500; text-decoration: none;
+    white-space: nowrap; display: flex; align-items: center; gap: 5px;
+    transition: color 0.15s;
+  }
+  .nav-phone:hover { color: #fff; }
 
   .nav-btn {
-    background: var(--red); color: var(--white);
+    background: var(--red); color: #fff;
     border: none; border-radius: 4px;
-    padding: 0.6rem 1.4rem;
-    font-size: var(--fs-sm); font-weight: 700; cursor: pointer;
-    text-decoration: none; letter-spacing: 0.02em;
+    padding: 0.5rem 1.2rem;
+    font-size: 13px; font-weight: 800; cursor: pointer;
+    text-decoration: none; letter-spacing: 0.06em;
     transition: background 0.18s;
-    position: relative; z-index: 1;
+    white-space: nowrap;
   }
   .nav-btn:hover { background: var(--red-h); }
 
@@ -909,18 +933,24 @@
 
   .nav-mobile-menu {
     display: none;
-    position: fixed; top: 58px; left: 0; right: 0;
+    position: fixed; top: 60px; left: 0; right: 0;
     background: rgba(10,10,10,0.98);
     padding: 1.25rem 5vw 1.5rem;
     border-bottom: 1px solid #1A1A1A;
     z-index: 99;
   }
-  .nav-mobile-menu.open { display: flex; flex-direction: column; gap: 0.75rem; }
+  .nav-mobile-menu.open { display: flex; flex-direction: column; gap: 0.5rem; }
+  .nav-mobile-menu a {
+    color: #ccc; text-decoration: none; font-size: 15px; font-weight: 500;
+    padding: 0.5rem 0; border-bottom: 1px solid #1a1a1a;
+  }
+  .nav-mobile-menu a:last-child { border-bottom: none; }
   .nav-mobile-cta {
-    display: block; background: var(--red); color: #fff;
-    text-align: center; padding: 0.8rem 1.5rem;
+    display: block; background: var(--red); color: #fff !important;
+    text-align: center; padding: 0.75rem 1.5rem;
     border-radius: 7px; text-decoration: none;
-    font-weight: 700; font-size: 1rem;
+    font-weight: 800; font-size: 14px; letter-spacing: 0.05em;
+    border-bottom: none !important; margin-top: 0.5rem;
   }
 
   /* ── RESPONSIVE ── */
@@ -955,6 +985,7 @@
     nav { height: 58px; padding: 0 5vw; }
     .logo img { height: 28px; }
     .nav-btn-desktop { display: none; }
+    .nav-links-desktop { display: none; }
     .nav-hamburger { display: flex; }
 
     /* Typography scale-down */
@@ -1160,13 +1191,31 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="logo"><img src="data:image/avif;base64,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" alt="AppZoro" /></a>
-  <a href="mailto:info@appzoro.com" class="nav-btn nav-btn-desktop">Book a Call</a>
+  <ul class="nav-links nav-links-desktop">
+    <li><a href="#">Services <span class="arrow">▼</span></a></li>
+    <li><a href="#">Products <span class="arrow">▼</span></a></li>
+    <li><a href="#">Industries <span class="arrow">▼</span></a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">Company <span class="arrow">▼</span></a></li>
+    <li><a href="#">Blogs</a></li>
+  </ul>
+  <div class="nav-right nav-btn-desktop">
+    <a href="tel:6784624034" class="nav-phone">&#9990; 678-462-4034</a>
+    <a href="mailto:info@appzoro.com" class="nav-btn">LET'S TALK</a>
+  </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="nav-mobile-menu" id="navMobileMenu">
-  <a href="mailto:info@appzoro.com" class="nav-mobile-cta">Book a Call</a>
+  <a href="#">Services</a>
+  <a href="#">Products</a>
+  <a href="#">Industries</a>
+  <a href="#">Portfolio</a>
+  <a href="#">Company</a>
+  <a href="#">Blogs</a>
+  <a href="tel:6784624034">&#9990; 678-462-4034</a>
+  <a href="mailto:info@appzoro.com" class="nav-mobile-cta">LET'S TALK</a>
 </div>
 
 <!-- HERO -->
