@@ -2193,10 +2193,10 @@
     color: #fff;
   }
   .modal-left-bg {
-    position: absolute; inset: 0;
-    pointer-events: none; z-index: 0;
+    position: absolute !important; inset: 0;
+    pointer-events: none; z-index: 0 !important;
   }
-  .modal-left > * { position: relative; z-index: 1; }
+  .modal-left > *:not(.modal-left-bg) { position: relative; z-index: 1; }
 
   .modal-left-eyebrow {
     font-size: 0.65rem; font-weight: 700;
@@ -2391,52 +2391,42 @@
   .modal-success p  { font-size: 0.85rem; color: #5A5A58; }
 
   /* ── RESPONSIVE ── */
-  /* tablet: single-column, left panel condensed */
   @media(max-width:820px) {
     .modal-overlay { align-items: flex-start; padding: 12px; }
     .modal-card {
-      grid-template-columns: 1fr; max-width: 480px;
-      height: auto; max-height: 94vh;
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      height: auto;
+      max-height: 96dvh;
+      overflow: visible; /* let each panel scroll independently */
     }
-    .modal-left { padding: 22px 20px 18px; }
-    .modal-left h2 { font-size: 1.3rem; }
-    .modal-left-sub { display: none; }
-    .modal-feature-cards { gap: 0.4rem; margin-bottom: 0.75rem; }
-    .modal-feature-card p { display: none; }
-    .modal-trust-strip { flex-direction: row; flex-wrap: wrap; }
-    .modal-right { padding: 22px 20px 20px; }
+    /* Compact dark header strip — hide heavy content */
+    .modal-left {
+      padding: 18px 20px 16px;
+      overflow-y: visible;
+    }
+    .modal-left h2 { font-size: 1.25rem; margin-bottom: 0; }
+    .modal-left-sub,
+    .modal-feature-cards,
+    .modal-trust-strip { display: none; }
+    /* Right panel scrolls if form is tall */
+    .modal-right {
+      padding: 20px 20px 20px;
+      overflow-y: auto;
+      max-height: calc(96dvh - 80px); /* viewport minus the compact left strip */
+    }
     .modal-right-title { font-size: 1.2rem; }
   }
   @media(max-width:480px) {
+    .modal-overlay { padding: 8px; }
     .modal-card { border-radius: 12px; max-width: 100%; }
-    .modal-left { padding: 18px 16px 14px; }
-    .modal-feature-cards { grid-template-columns: repeat(3,1fr); gap: 0.3rem; }
-    .modal-feature-card { padding: 8px; }
-    .modal-feature-icon { width: 26px;
-      height: 28px;
-      margin-bottom: 0.4rem;
-    }
-
-    .modal-feature-card h4 {
-      font-size: 0.7rem;
-    }
-
-    .modal-right {
-      padding: 22px 18px 18px;
-    }
-
-    .modal-row {
-      grid-template-columns: 1fr;
-    }
-
-    .modal-submit {
-      width: 100%;
-      justify-content: center;
-    }
-
-    .modal-right-title {
-      font-size: 1.25rem;
-    }
+    .modal-left { padding: 14px 16px 12px; }
+    .modal-left h2 { font-size: 1.1rem; }
+    .modal-left-eyebrow { font-size: 0.6rem; margin-bottom: 0.4rem; }
+    .modal-right { padding: 18px 16px 18px; max-height: calc(96dvh - 64px); }
+    .modal-row { grid-template-columns: 1fr; }
+    .modal-submit { width: 100%; justify-content: center; }
+    .modal-right-title { font-size: 1.15rem; }
   }
 </style>
 
