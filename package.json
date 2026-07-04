@@ -1,0 +1,13 @@
+{
+  "name": "appzoro-landing-page",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test --config=playwright.landing.config.ts",
+    "serve": "npx serve -l 3456 ."
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "serve": "^14.2.3"
+  }
+}
