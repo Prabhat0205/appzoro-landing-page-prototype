@@ -29,7 +29,7 @@ test.describe("CTA buttons open the contact modal", () => {
     await expectModalOpen(page);
     await expect(page.locator(".modal-left")).toBeVisible();
     await expect(page.locator(".modal-right")).toBeVisible();
-    await expect(page.locator("#hsFormContainer")).toBeVisible();
+    await expect(page.locator("#contactForm")).toBeVisible();
   });
 
   test("hero Get in Touch button opens modal", async ({ page }) => {
@@ -43,11 +43,12 @@ test.describe("CTA buttons open the contact modal", () => {
     await page.goto("/");
     await page.locator(".btn-work-cta").first().click();
     await expectModalOpen(page);
-    await expect(page.locator("#hsFormContainer")).toBeVisible();
+    await expect(page.locator("#contactForm")).toBeVisible();
   });
 
   test("mobile nav LET'S TALK opens modal", async ({ page }) => {
     await page.goto("/");
+    // open hamburger if visible
     const hamburger = page.locator("#navHamburger");
     if (await hamburger.isVisible()) {
       await hamburger.click();
@@ -123,66 +124,77 @@ test.describe("Modal close behaviours", () => {
   });
 });
 
-// ─── HUBSPOT FORM EMBED ───────────────────────────────────────────────────────
+// ─── FORM VALIDATION ─────────────────────────────────────────────────────────
 
-test.describe("HubSpot form embed", () => {
+test.describe("Form validation", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
     await page.locator(".btn-lime").first().click();
     await expectModalOpen(page);
   });
 
-  test("HubSpot form container is present in the right panel", async ({ page }) => {
-    await expect(page.locator("#hsFormContainer")).toBeVisible();
+  test("submit without any data shows errors", async ({ page }) => {
+    await page.locator("#modalSubmitBtn").click();
+    // Required fields get red border
+    const firstNameBorder = await page
+      .locator('[name="firstName"]')
+      .evaluate((el: HTMLInputElement) => el.style.borderColor);
+    expect(firstNameBorder).toBe("rgb(212, 43, 43)");
+    // Services error shown
+    await expect(page.locator("#servicesError")).toBeVisible();
+    // Captcha error shown
+    await expect(page.locator("#captchaError")).toBeVisible();
   });
 
-  test("HubSpot embed script is referenced in the page", async ({ page }) => {
-    const hasScript = await page.evaluate(() =>
-      Array.from(document.querySelectorAll("script[src]")).some(
-        (s) => (s as HTMLScriptElement).src.includes("hsforms.net")
-      )
-    );
-    expect(hasScript).toBe(true);
+  test("service pills toggle correctly", async ({ page }) => {
+    const firstPill = page.locator(".modal-services-pills label").first();
+    await firstPill.click();
+    await expect(firstPill.locator(".pill-tag")).toHaveCSS("color", "rgb(212, 43, 43)");
+    // Click again to deselect
+    await firstPill.click();
+    await expect(firstPill.locator(".pill-tag")).not.toHaveCSS("color", "rgb(212, 43, 43)");
   });
 
-  test("right panel shows title, subtitle and HubSpot container", async ({ page }) => {
-    await expect(page.locator(".modal-right-title")).toContainText("Book a Free");
-    await expect(page.locator(".modal-right-sub")).toBeVisible();
-    await expect(page.locator("#hsFormContainer")).toBeVisible();
+  test("wrong captcha shows error", async ({ page }) => {
+    await page.fill('[name="firstName"]', "Test");
+    await page.fill('[name="lastName"]', "User");
+    await page.fill('[name="email"]', "test@example.com");
+    await page.locator(".modal-services-pills label").first().click();
+    await page.fill("#captchaAnswer", "99");
+    await page.locator("#modalSubmitBtn").click();
+    await expect(page.locator("#captchaError")).toBeVisible();
   });
 });
 
 // ─── MODAL CONTENT ────────────────────────────────────────────────────────────
 
-test.describe("Modal content", () => {
+test.describe("Modal content and services", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
     await page.locator(".btn-lime").first().click();
     await expectModalOpen(page);
   });
 
-  test("left panel has eyebrow, heading, feature cards and trust strip on desktop", async ({ page }) => {
-    // Feature cards and trust strip are hidden on mobile (≤820px) — skip there
-    const vw = await page.evaluate(() => window.innerWidth);
-    if (vw <= 820) { test.skip(); return; }
+  test("left panel has eyebrow, heading, feature cards and trust strip", async ({ page }) => {
     await expect(page.locator(".modal-left-eyebrow")).toContainText("Future");
     await expect(page.locator(".modal-left h2")).toContainText("Today");
     await expect(page.locator(".modal-feature-card")).toHaveCount(3);
     await expect(page.locator(".modal-trust-item")).toHaveCount(3);
   });
 
-  test("left panel shows compact eyebrow and heading on mobile", async ({ page }) => {
-    const vw = await page.evaluate(() => window.innerWidth);
-    if (vw > 820) { test.skip(); return; }
-    await expect(page.locator(".modal-left-eyebrow")).toBeVisible();
-    await expect(page.locator(".modal-left h2")).toBeVisible();
-    // Feature cards hidden on mobile
-    await expect(page.locator(".modal-feature-cards")).toBeHidden();
+  test("correct AI-focused service options are present", async ({ page }) => {
+    const pills = page.locator(".modal-services-pills .pill-tag");
+    await expect(pills).toHaveCount(5);
+    await expect(pills.nth(0)).toContainText("AI Integration");
+    await expect(pills.nth(1)).toContainText("Process Automation");
+    await expect(pills.nth(2)).toContainText("Data Analytics");
+    await expect(pills.nth(3)).toContainText("Custom AI Solutions");
+    await expect(pills.nth(4)).toContainText("Not Sure");
   });
 
-  test("right panel has HubSpot container and correct heading", async ({ page }) => {
-    await expect(page.locator(".modal-right-title")).toContainText("Book a Free");
-    await expect(page.locator("#hsFormContainer")).toBeVisible();
+  test("captcha question is rendered", async ({ page }) => {
+    const label = await page.locator("#captchaQuestion").textContent();
+    expect(label).toMatch(/\d+ \+ \d+ =/);
   });
 });
 
@@ -201,12 +213,13 @@ test.describe("Responsive layout", () => {
     // Should have two distinct column values (45/55 split)
     const parts = cols.trim().split(/\s+/);
     expect(parts).toHaveLength(2);
-    expect(parts[0]).not.toBe(parts[1]);
+    expect(parts[0]).not.toBe(parts[1]); // not equal — 45/55
   });
 
   test("modal stacks to single column on mobile", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
+    // On mobile the CTA box is full-width
     await page.locator(".btn-lime").first().click();
     await expectModalOpen(page);
 
